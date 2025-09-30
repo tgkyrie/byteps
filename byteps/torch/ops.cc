@@ -78,13 +78,13 @@ void StartTask(::torch::Tensor tensor, ::torch::Tensor output, int average,
       [handle, average, tensor, output](const Status& status) mutable {
         // Will execute in the `device` context.
         if (average) {
-#if TORCH_VERSION >= 1005000000
+// #if TORCH_VERSION >= 1005000000
           if (isIntegralType(output.scalar_type())) {
             output.floor_divide_(byteps_size());
             handle_manager.MarkDone(handle, status);
             return;
           }
-#endif
+// #endif
           output.div_(byteps_size());
         }
         handle_manager.MarkDone(handle, status);

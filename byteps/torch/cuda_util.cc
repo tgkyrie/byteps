@@ -14,7 +14,7 @@
 // =============================================================================
 
 #if HAVE_CUDA
-#include <THC/THC.h>
+#include "THC/THC.h"
 #include "cuda_runtime.h"
 #endif
 

@@ -19,7 +19,7 @@
 #include <c10/cuda/CUDAException.h>
 #include <c10/cuda/CUDAStream.h>
 #else
-#include <THC/THC.h>
+#include "THC/THC.h"
 #endif
 #include <cassert>
 #include <mutex>

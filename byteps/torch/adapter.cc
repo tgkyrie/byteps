@@ -16,6 +16,7 @@
 
 #include "adapter.h"
 #include "cuda_util.h"
+#include <ATen/ATen.h>   // or <torch/torch.h>
 
 namespace byteps {
 namespace torch {
@@ -56,11 +57,12 @@ const TensorShape TorchTensor::shape() const {
 const void* TorchTensor::data() const { return tensor_.data_ptr(); }
 
 int64_t TorchTensor::size() const {
-#if TORCH_VERSION >= 1001000000
-  return tensor_.element_size() * tensor_.numel();
-#else
-  return tensor_.type().elementSizeInBytes() * tensor_.numel();
-#endif
+// #if TORCH_VERSION >= 1001000000
+//   return tensor_.element_size() * tensor_.numel();
+// #else
+//   return tensor_.type().elementSizeInBytes() * tensor_.numel();
+// #endif
+  return static_cast<int64_t>(tensor_.element_size()) * tensor_.numel();
 }
 
 void ThrowIfError(Status status) {

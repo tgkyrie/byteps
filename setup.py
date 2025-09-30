@@ -43,7 +43,7 @@ VERSION = '0.2.5'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-    'cloudpickle',
+    # 'cloudpickle',
     # 'cffi>=1.4.0',
 ]
 
@@ -822,7 +822,6 @@ def is_torch_cuda(build_ext, include_dirs, extra_compile_args):
         from torch.utils.cpp_extension import include_paths
         test_compile(build_ext, 'test_torch_cuda', include_dirs=include_dirs + include_paths(cuda=True),
                      extra_compile_preargs=extra_compile_args, code=textwrap.dedent('''\
-            #include <THC/THC.h>
             void test() {
             }
             '''))
@@ -833,7 +832,7 @@ def is_torch_cuda(build_ext, include_dirs, extra_compile_args):
 
 
 def build_torch_extension(build_ext, options, torch_version):
-    pytorch_compile_flags = ["-std=c++14" if flag == "-std=c++11" 
+    pytorch_compile_flags = ["-std=c++17" if flag == "-std=c++11" 
                              else flag for flag in options['COMPILE_FLAGS']]
     have_cuda = is_torch_cuda(build_ext, include_dirs=options['INCLUDES'],
                               extra_compile_args=pytorch_compile_flags)
@@ -985,7 +984,7 @@ class custom_build_ext(build_ext):
 
             if os.path.exists("./zeromq-4.1.4.tar.gz"):
                 zmq_tarball_path = os.path.join(here, './zeromq-4.1.4.tar.gz')
-                make_option += " WGET='curl -O '  ZMQ_URL=file://" + zmq_tarball_path + " "
+                # make_option += " WGET='curl -O '  ZMQ_URL=file://" + zmq_tarball_path + " "
 
             make_process = subprocess.Popen('make ' + make_option,
                                             cwd='3rdparty/ps-lite',

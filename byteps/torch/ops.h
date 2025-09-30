@@ -17,10 +17,10 @@
 #ifndef BYTEPS_TORCH_OPS_H
 #define BYTEPS_TORCH_OPS_H
 
-#include <TH/TH.h>
+#include "TH/TH.h"
 
 #if HAVE_CUDA
-#include <THC/THC.h>
+#include "THC/THC.h"
 #endif
 
 #include "../common/operations.h"

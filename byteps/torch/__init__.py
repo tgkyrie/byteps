@@ -346,7 +346,7 @@ def broadcast_optimizer_state(optimizer, root_rank, prefix="Parameter."):
 
     # Returns the full type structure of the possibly nested objects for recursive casting back
     def _get_types(x):
-        if isinstance(x, collections.Iterable):
+        if isinstance(x, collections.abc.Iterable):
             return type(x), [_get_types(xi) for xi in x]
         else:
             return type(x)
@@ -385,7 +385,8 @@ def broadcast_optimizer_state(optimizer, root_rank, prefix="Parameter."):
         for option_key, option_value in group.items():
             if option_key == 'params':
                 continue
-
+            if option_value is None:
+                continue
             # Options like the learning rate are scalar, and need to be broadcast separately
             key = '%s.%d' % (option_key, index)
             dtypes = _get_types(option_value)
